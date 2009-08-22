@@ -1,4 +1,4 @@
-<% form_for @link do |form| %>  
+<% form_for link do |form| %>  
 <%= form.error_messages %>
 <ul class="form_list">
   <li>  
@@ -9,6 +9,11 @@
 	<li>
 	<%= form.label :category, "category" %>
 	<%= form.collection_select(:category_id, current_user.categories, :id, :name, options = {:prompt => "select a category"}) %>
+	</li>
+	
+	<li>
+	<%= form.label :notes, "notes (optional)" %><br/>
+	<%= form.text_area :notes, :cols => 80, :rows => 5 %>
 	</li>
   
   <li>  

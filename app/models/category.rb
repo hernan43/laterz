@@ -1,6 +1,6 @@
 class Category < ActiveRecord::Base
   belongs_to :user
-  has_many :links
+  has_many :links, :dependent => :destroy
   
   before_save :set_count
   

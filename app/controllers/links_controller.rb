@@ -17,11 +17,15 @@ class LinksController < ApplicationController
     @link = Link.new(params[:link])
     @link.user = current_user
     
-    if @link.save  
-      flash[:notice] = "Link added."  
-      redirect_to links_path
-    else  
-      render :action => 'new'  
+    respond_to do |format|
+      if @link.save
+        flash[:notice] = 'Link was successfully created.'
+        format.html { redirect_back_or_default(links_path) }
+        format.xml  { render :xml => @link, :status => :created, :location => @link }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
+      end
     end
   end
 
@@ -31,11 +35,15 @@ class LinksController < ApplicationController
 
   def update
     @link = current_user.links.find(params[:id])
-    if @link.update_attributes(params[:link])  
-      flash[:notice] = "Successfully updated link."  
-      redirect_to links_path
-    else  
-      render :action => 'edit'  
+    respond_to do |format|
+      if @link.update_attributes(params[:link])
+        flash[:notice] = 'Link was successfully updated.'
+        format.html { redirect_back_or_default(links_path) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
+      end
     end
   end
 

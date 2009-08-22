@@ -46,7 +46,7 @@ class CategoriesController < ApplicationController
     respond_to do |format|
       if @category.save
         flash[:notice] = 'Category was successfully created.'
-        format.html { redirect_to(@category) }
+        format.html { redirect_back_or_default(links_path) }
         format.xml  { render :xml => @category, :status => :created, :location => @category }
       else
         format.html { render :action => "new" }
@@ -63,7 +63,7 @@ class CategoriesController < ApplicationController
     respond_to do |format|
       if @category.update_attributes(params[:category])
         flash[:notice] = 'Category was successfully updated.'
-        format.html { redirect_to(@category) }
+        format.html { redirect_back_or_default(links_path) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

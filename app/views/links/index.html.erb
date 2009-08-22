@@ -3,9 +3,13 @@
 	<ul id="category_list">
 		<li><%= link_to "uncategorized (#{@links.count})", links_path %></li>
 	<% current_user.categories.each do |category| %>
-		<li><%= link_to "#{h(category.name)} (#{category.count})", links_path({:category_id => category.id}) %></li>
+		<li id="<%= "category-#{category.id}" %>"><%= link_to "#{h(category.name)} (#{category.count})", links_path({:category_id => category.id}) %></li>
 	<% end %>
 	</ul>
+	<div id="category_form" style="">
+		<h3>add a category</h3>
+		<%= render :partial => "categories/category", :locals => {:category => Category.new} %>
+	</div>
 	<%= link_to "add a category", new_category_path %>
 </div>
 
@@ -18,5 +22,9 @@
 		<%= render :partial => 'links_list', :locals => {:links => @links} %>
 	<% end %>
 	
+	<div id="link_form" style="">
+		<h3>add a category</h3>
+		<%= render :partial => "links/link", :locals => {:link => Link.new} %>
+	</div>
 	<%= link_to "add a link", new_link_path %>
 </div>

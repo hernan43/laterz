@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090822151958) do
+ActiveRecord::Schema.define(:version => 20090822172705) do
 
   create_table "categories", :force => true do |t|
     t.integer  "user_id"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20090822151958) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "category_id"
+    t.text     "notes"
   end
 
   add_index "links", ["category_id"], :name => "index_links_on_category_id"
