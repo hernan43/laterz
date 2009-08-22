@@ -2,7 +2,11 @@ class LinksController < ApplicationController
   before_filter :require_user
   
   def index
-    @links = current_user.links.no_category
+    if params[:category_id]
+      @category = Category.find(params[:category_id])
+    else
+      @links = current_user.links.no_category
+    end
   end
   
   def new

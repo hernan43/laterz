@@ -1,6 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :categories
-
   map.resources :users
   map.resources :user_sessions
   map.resources :static
