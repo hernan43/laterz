@@ -67,9 +67,6 @@ class LinksController < ApplicationController
         format.js
         format.html { redirect_back_or_default(links_path) }
         format.xml  { head :ok }
-      else
-        format.js
-        format.html { redirect_back_or_default(links_path) }
       end
     end
   end

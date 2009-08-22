@@ -1,0 +1,4 @@
+page.replace :category_list, :partial => 'links/category_list'
+page.visual_effect :highlight, :category_list
+page.replace_html :notice, flash[:notice]
+flash.discard

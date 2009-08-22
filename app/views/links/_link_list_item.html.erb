@@ -1,6 +1,10 @@
 <li id="<%= "link-#{link.id}" %>">
-<%= link_to link.get_title, link.url %> <%= link_to "edit", edit_link_path(link) %>  <%= link_to_remote "delete", :url => link_url(link), :method => :delete %>
+
+<%= link_to link.get_title, link.url %> <%= link_to "edit", edit_link_path(link) %>
+<%= link_to_remote "delete", :url => link_url(link), :method => :delete %>
+
 <% if link.notes %>
 <p><%=h(link.notes) %></p>
 <% end %>
+
 </li>

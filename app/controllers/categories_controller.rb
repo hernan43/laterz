@@ -59,7 +59,7 @@ class CategoriesController < ApplicationController
   # PUT /categories/1
   # PUT /categories/1.xml
   def update
-    @category = Category.find(params[:id])
+    @category = current_user.categories.find(params[:id])
 
     respond_to do |format|
       if @category.update_attributes(params[:category])
@@ -76,11 +76,13 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.xml
   def destroy
-    @category = Category.find(params[:id])
+    @category = current_user.categories.find(params[:id])
     @category.destroy
 
     respond_to do |format|
-      format.html { redirect_to(categories_url) }
+      flash[:notice] = "Category #{@category.name} was deleted."
+      format.js
+      format.html { redirect_back_or_default(links_path) }
       format.xml  { head :ok }
     end
   end
