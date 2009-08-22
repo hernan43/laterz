@@ -18,3 +18,26 @@ set :scm_verbose, true
 role :app, "laterz.r09.railsrumble.com"
 role :web, "laterz.r09.railsrumble.com"
 role :db,  "laterz.r09.railsrumble.com", :primary => true
+
+namespace :db do
+  desc "Link database"
+  task :symlink do
+    run "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  end 
+end
+
+namespace :deploy do
+  desc "Override deploy:cold to NOT run migrations"
+  task :cold do
+    update
+    start
+  end
+
+  desc "Restart Application"
+  task :restart do
+    run "touch #{current_path}/tmp/restart.txt"
+  end
+end
+
+# make sure to link my db
+after "deploy:update_code", "db:symlink"
