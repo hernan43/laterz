@@ -5,8 +5,10 @@ class LinksController < ApplicationController
     # this is probably a dumb idea to do it this way
     if params[:category_id]
       @category = Category.find(params[:category_id])
+      @links = @category.links
+    else
+      @links = current_user.links.no_category
     end
-    @links = current_user.links.no_category
   end
   
   def new
@@ -18,6 +20,14 @@ class LinksController < ApplicationController
     @link.user = current_user
     
     respond_to do |format|
+      # in case we need to refresh the links list
+      if params[:category_id]
+        @category = Category.find(params[:category_id])
+        @links = @category.links
+      else
+        @links = current_user.links.no_category
+      end
+      
       if @link.save
         flash[:notice] = 'Link was successfully created.'
         format.js

@@ -13,19 +13,18 @@
 <div id="links">
 	<% if @category %>
 		<h2>Links for <%=h @category.name %></h2>
-		<%= render :partial => 'links_list', :locals => {:links => @category.links} %>
 	<% else %>
 		<h2>Links with no category</h2>
-		<%= render :partial => 'links_list', :locals => {:links => @links} %>
 	<% end %>
+
+	<%= render :partial => 'links_list', :locals => {:links => @links} %>
 
 	<div id="link_form">
 		<h3>add a new link</h3>
 		<% remote_form_for Link.new do |f| %>
+		<%= hidden_field_tag :category_id, @category.id if @category %>
 		<%= render :partial => "links/link", :locals => {:f => f} %>
 		<% end %>
 	</div>
-	<%= link_to "add a link", new_link_path %>
-	
 </div>	
 	
