@@ -2,15 +2,19 @@
 	<li>
 	<%= link_to "uncategorized", links_path %> 
 	<span class="quick_url">
-		<a href="javascript:void(location.href='<%= new_link_url %>?return=true&amp;url='+encodeURIComponent(location.href))"  onmouseover="window.status='';return true" onclick="return false">save this</a>
+		<%= generate_category_shortcut_link %>
 	</span>
 	</li>
 <% current_user.categories.each do |category| %>
 	<li id="<%= "category-#{category.id}" %>">
 	
 	<%= link_to "#{h(category.name)} (#{category.count})", links_path({:category_id => category.id}) %> 
+	
 	<%= link_to "edit", edit_category_path(category) %>
 	<%= link_to_remote "delete", :url => category_url(category), :method => :delete %>
+	<span class="quick_url">
+		<%= generate_category_shortcut_link(category) %>
+	</span>
 	
 	</li>
 <% end %>
