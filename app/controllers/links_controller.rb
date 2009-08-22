@@ -2,6 +2,7 @@ class LinksController < ApplicationController
   before_filter :require_user
   
   def index
+    @links = current_user.links.no_category
   end
   
   def new
@@ -14,7 +15,7 @@ class LinksController < ApplicationController
     
     if @link.save  
       flash[:notice] = "Link added."  
-      redirect_to user_path(current_user)  
+      redirect_to links_path
     else  
       render :action => 'new'  
     end
@@ -28,7 +29,7 @@ class LinksController < ApplicationController
     @link = current_user.links.find(params[:id])
     if @link.update_attributes(params[:link])  
       flash[:notice] = "Successfully updated link."  
-      redirect_to user_path
+      redirect_to links_path
     else  
       render :action => 'edit'  
     end
