@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   end
   
   has_many :links
+  has_many :categories
   
   private  
     def map_openid_registration(registration)  
