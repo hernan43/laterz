@@ -6,6 +6,7 @@ class Link < ActiveRecord::Base
   
   before_create :set_title
   before_create :set_favicon
+  before_save :strip_bad_categories
   
   # this is for printing
   def get_title
@@ -21,6 +22,13 @@ class Link < ActiveRecord::Base
   end
   
   def set_favicon
+    # this will set the favicon at some point
+  end
+  
+  def strip_bad_categories
+    if self.category_id and not self.user.category_ids.include? self.category_id
+      self.category_id = nil
+    end 
   end
   
   protected

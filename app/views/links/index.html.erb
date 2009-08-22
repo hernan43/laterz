@@ -1,7 +1,18 @@
+<div id="categories">
+	
+	<ul id="category_list">
+	<% current_user.categories.each do |category| %>
+		<li><%= link_to category.name %></li>
+	<% end %>
+	</ul>
+</div>
+
 <div id="links">
+	<ul id="link_list">
 	<% @links.each do |link| %>
 		<li>
 			<%= link_to link.get_title, link.url %>
 		</li>
 	<% end %>
+	</ul>
 </div>

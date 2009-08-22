@@ -6,6 +6,11 @@
     <%= form.text_field :url %>  
   </li>  
   
+	<li>
+	<%= form.label :category, "category" %>
+	<%= form.collection_select(:category_id, current_user.categories, :id, :name, options = {:prompt => "select a category"}) %>
+	</li>
+  
   <li>  
     <%= form.submit "submit" %>  
   </li>  
