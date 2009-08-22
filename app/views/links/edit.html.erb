@@ -3,4 +3,6 @@
 <% end %>
 
 <h2>Edit link</h2>
-<%= render :partial => 'link', :locals => {:link => @link} %>
+<% form_for link do |f| %>  
+<%= render :partial => 'link', :locals => {:f => f} %>
+<% end %>

@@ -1,0 +1,3 @@
+page.replace :category_list, :partial => 'links/category_list'
+page.visual_effect :highlight, :category_list
+page[:new_category].reset

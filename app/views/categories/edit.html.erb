@@ -1,6 +1,7 @@
-<h1>Editing category</h1>
+<h2>editing category</h2>
 
-<%= render :partial => 'category', :locals => {:category => @category} %>
+<% form_for(@category) do |f| %>
+<%= render :partial => 'category', :locals => {:f => f} %>
+<% end %>
 
-<%= link_to 'Show', @category %> |
-<%= link_to 'Back', categories_path %>
+<%= link_to 'back', categories_path %>

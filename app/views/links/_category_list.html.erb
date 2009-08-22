@@ -1,0 +1,6 @@
+<ul id="category_list">
+	<li><%= link_to "uncategorized", links_path %></li>
+<% current_user.categories.each do |category| %>
+	<li id="<%= "category-#{category.id}" %>"><%= link_to "#{h(category.name)} (#{category.count})", links_path({:category_id => category.id}) %> <%= link_to "edit", edit_category_path(category) %></li>
+<% end %>
+</ul>
