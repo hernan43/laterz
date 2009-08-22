@@ -12,7 +12,8 @@ set :deploy_via, :remote_cache
 
 # If you aren't using Subversion to manage your source code, specify
 # your SCM below:
-set :scm, :git
+set :scm, "git"
+set :scm_verbose, true
 
 role :app, "laterz.r09.railsrumble.com"
 role :web, "laterz.r09.railsrumble.com"
