@@ -1,9 +1,9 @@
 <div id="categories">
 	
 	<ul id="category_list">
-		<li><%= link_to "uncategorized", links_path %></li>
+		<li><%= link_to "uncategorized (#{@links.count})", links_path %></li>
 	<% current_user.categories.each do |category| %>
-		<li><%= link_to h(category.name), links_path({:category_id => category.id}) %></li>
+		<li><%= link_to "#{h(category.name)} (#{category.count})", links_path({:category_id => category.id}) %></li>
 	<% end %>
 	</ul>
 	<%= link_to "add a category", new_category_path %>

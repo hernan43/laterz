@@ -1,0 +1,9 @@
+<% if links.length <= 0 %>
+	<p>There are no links in this category.</p>
+<% else %>
+	<ul id="link_list">
+	<% links.each do |link| %>
+		<%= render :partial => 'link_list_item', :locals => { :link => link } %>
+	<% end %>
+	</ul>
+<% end %>
