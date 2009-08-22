@@ -1,3 +1,4 @@
 <li id="<%= "link-#{link.id}" %>">
-<%= link_to link.get_title, link.url %>
+<%= link_to link.get_title, link.url %> <%= link_to "edit", edit_link_path(link) %>  <%= link_to "delete" %>
+<p><%=h(link.notes) if link.notes %></p>
 </li>
