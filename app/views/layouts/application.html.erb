@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Laterz <%= yield :title %></title>
+  <%= stylesheet_link_tag 'site' %>
+  
+  <%= javascript_include_tag :defaults %>
+</head>
+<body>
+
+<div id="main"><div class="wrapper">
+
+<% if not flash[:notice].nil? %>
+<div id="alert"><p class="notice"><%= flash[:notice] %></p></div> 
+<% end %>
+<% if not flash[:error].nil? %>
+<div id="alert"><p class="warning"><%= flash[:error] %></p></div>
+<% end %>
+
+<div id="header">
+</div>
+
+<%= yield  %>
+
+<div class="clear"></div>
+</div></div>
+</body>
+</html>
