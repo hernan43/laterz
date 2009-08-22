@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090822122151) do
+ActiveRecord::Schema.define(:version => 20090822125915) do
 
   create_table "links", :force => true do |t|
     t.string   "url"
@@ -18,7 +18,10 @@ ActiveRecord::Schema.define(:version => 20090822122151) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_id"
   end
+
+  add_index "links", ["category_id"], :name => "index_links_on_category_id"
 
   create_table "open_id_authentication_associations", :force => true do |t|
     t.integer "issued"

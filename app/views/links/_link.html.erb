@@ -1,0 +1,13 @@
+<% form_for @link do |form| %>  
+<%= form.error_messages %>
+<ul class="form_list">
+  <li>  
+    <%= form.label :url, "url" %>  
+    <%= form.text_field :url %>  
+  </li>  
+  
+  <li>  
+    <%= form.submit "submit" %>  
+  </li>  
+</ul> 
+<% end %>

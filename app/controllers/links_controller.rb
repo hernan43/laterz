@@ -1,0 +1,43 @@
+class LinksController < ApplicationController
+  before_filter :require_user
+  
+  def index
+  end
+  
+  def new
+    @link = Link.new
+  end
+
+  def create
+    @link = Link.new(params[:link])
+    @link.user = current_user
+    
+    if @link.save  
+      flash[:notice] = "Link added."  
+      redirect_to user_path(current_user)  
+    else  
+      render :action => 'new'  
+    end
+  end
+
+  def edit
+    @link = current_user.links.find(params[:id])
+  end
+
+  def update
+    @link = current_user.links.find(params[:id])
+    if @link.update_attributes(params[:link])  
+      flash[:notice] = "Successfully updated link."  
+      redirect_to user_path
+    else  
+      render :action => 'edit'  
+    end
+  end
+
+  def destroy
+    @link = current_user.links.find(params[:id])
+    flash[:notice] = "Link deleted."  
+    redirect_to :back
+  end
+
+end

@@ -2,6 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   map.resources :user_sessions
   map.resources :static
+  map.resources :links
   
   # The priority is based upon order of creation: first created -> highest priority.
 
