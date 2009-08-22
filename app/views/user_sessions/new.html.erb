@@ -4,17 +4,13 @@
   
 <% form_for @user_session do |form| %>  
 <%= form.error_messages %>  
-<ul class="formList">  
+<ul class="form_list">  
   <li>  
-    <%= form.label :username, "Username" %>  
-    <%= form.text_field :username %>  
+    <%= form.label :openid_identifier, "OpenID URL "%>  
+    <%= form.text_field :openid_identifier %>  
   </li>  
   <li>  
-    <%= form.label :password, "Password" %>  
-    <%= form.password_field :password %>  
-  </li>  
-  <li>  
-    <%= form.submit "Submit" %>  
+    <%= form.submit "submit" %>  
   </li>  
 </ul>  
 <% end %>

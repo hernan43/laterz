@@ -1,24 +1,21 @@
 <% form_for @user do |form| %>  
 <%= form.error_messages %>  
-<ul class="formList">  
+<h2>OpenID</h2>  
+<ul class="form_list">
   <li>  
-    <%= form.label :username, "Username" %>  
+    <%= form.label :username, "username" %>  
     <%= form.text_field :username %>  
   </li>  
   <li>  
-    <%= form.label :email, "Email" %>  
+    <%= form.label :email, "email" %>  
     <%= form.text_field :email %>  
   </li>  
   <li>  
-    <%= form.label :password, "Password" %>  
-    <%= form.password_field :password %>  
+    <%= form.label :openid_identifier, "OpenID URL "%>  
+    <%= form.text_field :openid_identifier %>  
   </li>  
   <li>  
-    <%= form.label :password_confirmation, "Password confirmation" %>  
-    <%= form.password_field :password_confirmation %>  
+    <%= form.submit "submit" %>  
   </li>  
-  <li>  
-    <%= form.submit "Submit" %>  
-  </li>  
-</ul>  
+</ul> 
 <% end %>
