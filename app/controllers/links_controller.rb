@@ -20,9 +20,11 @@ class LinksController < ApplicationController
     respond_to do |format|
       if @link.save
         flash[:notice] = 'Link was successfully created.'
+        format.js
         format.html { redirect_back_or_default(links_path) }
         format.xml  { render :xml => @link, :status => :created, :location => @link }
       else
+        format.js
         format.html { render :action => "new" }
         format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
       end
