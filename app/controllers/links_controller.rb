@@ -13,6 +13,7 @@ class LinksController < ApplicationController
   
   def new
     @link = Link.new
+    @link.category_id = params[:category_id] if params[:category_id]
   end
 
   def create
@@ -31,7 +32,13 @@ class LinksController < ApplicationController
       if @link.save
         flash[:notice] = 'Link was successfully created.'
         format.js
-        format.html { redirect_back_or_default(links_path) }
+        format.html { 
+          if params[:return]
+            redirect_to @link.url
+          else
+            redirect_back_or_default(links_path)
+          end 
+        }
         format.xml  { render :xml => @link, :status => :created, :location => @link }
       else
         format.js

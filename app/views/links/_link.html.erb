@@ -1,8 +1,9 @@
 <%= f.error_messages %>
+<%= hidden_field_tag(:return) if params[:return] %>
 <ul class="form_list">
   <li>  
     <%= f.label :url, "url" %>  
-    <%= f.text_field :url %>  
+    <%= f.text_field :url, :value => params[:url] if params[:url] %>  
   </li>  
   
 	<li>

@@ -1,5 +1,10 @@
 <ul id="category_list">
-	<li><%= link_to "uncategorized", links_path %></li>
+	<li>
+	<%= link_to "uncategorized", links_path %> 
+	<span class="quick_url">
+		<a href="javascript:void(location.href='<%= new_link_url %>?return=true&amp;url='+encodeURIComponent(location.href))"  onmouseover="window.status='';return true" onclick="return false">save this</a>
+	</span>
+	</li>
 <% current_user.categories.each do |category| %>
 	<li id="<%= "category-#{category.id}" %>">
 	
