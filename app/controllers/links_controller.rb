@@ -61,8 +61,17 @@ class LinksController < ApplicationController
 
   def destroy
     @link = current_user.links.find(params[:id])
-    flash[:notice] = "Link deleted."  
-    redirect_to :back
+    respond_to do |format|
+      if @link.destroy
+        flash[:notice] = 'Link was deleted.'
+        format.js
+        format.html { redirect_back_or_default(links_path) }
+        format.xml  { head :ok }
+      else
+        format.js
+        format.html { redirect_back_or_default(links_path) }
+      end
+    end
   end
 
 end

@@ -3,6 +3,6 @@
 <% end %>
   
 <h2>Add new link</h2>
-<% form_for link do |f| %>  
+<% form_for @link do |f| %>  
 <%= render :partial => 'link', :locals => {:f => f} %>
 <% end %>

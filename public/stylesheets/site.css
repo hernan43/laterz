@@ -1,0 +1,14 @@
+#notice, #error {
+  padding: 5px 8px;
+  margin: 10px 0;
+}
+ 
+#notice {
+  background-color: #CFC;
+  border: solid 1px #6C6;
+}
+ 
+#error {
+  background-color: #FCC;
+  border: solid 1px #C66;
+}

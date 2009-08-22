@@ -13,12 +13,12 @@
 
 <div id="main"><div class="wrapper">
 
-<% if not flash[:notice].nil? %>
-<div id="alert"><p class="notice"><%= flash[:notice] %></p></div> 
-<% end %>
-<% if not flash[:error].nil? %>
-<div id="alert"><p class="warning"><%= flash[:error] %></p></div>
-<% end %>
+<%# if not flash[:notice].nil? %>
+<div id="notice"><%= flash[:notice] %></div> 
+<%# end %>
+<%# if not flash[:error].nil? %>
+<div id="error"><%= flash[:error] %></div>
+<%# end %>
 
 <div id="header">
 </div>

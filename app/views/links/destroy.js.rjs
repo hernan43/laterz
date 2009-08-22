@@ -1,7 +1,5 @@
 page.replace :category_list, :partial => 'category_list'
-page[:new_link].reset
-page.replace :link_list, :partial => 'links_list', :locals => {:links => @links}
-page.visual_effect :highlight, "link-#{@link.id}"
+page.remove "link-#{@link.id}"
 page.visual_effect :highlight, "category-#{@link.category_id}" if @link.category_id
 page.replace_html :notice, flash[:notice]
 flash.discard
