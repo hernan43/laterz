@@ -32,6 +32,16 @@ textarea {
 	font-size: 1.3em;
 }
 
+#categories {
+	float: left;
+	width: 20%;
+}
+
+#links {
+	float: right;
+	width: 80%;
+}
+
 #category_list {
 	margin-left: 0px;
 	padding-left: 0px;
@@ -42,21 +52,29 @@ textarea {
 }
 
 #link_list {
-	border: 1px solid #dddddd;
+	border: 1px solid #eeeeee;
 	margin-left: 0px;
 	padding-left: 0px;
 	width: 85%;
 }
 
 #link_list li {
-	border-bottom: 1px solid #dddddd;
+	border-bottom: 1px solid #eeeeee;
 	list-style: none;
-	padding: 5px 3px;
+	padding: 5px 7px;
+}
+
+ul#link_list {
+	margin-top: 0px;
 }
 
 .link_title {
 	display: inline-block;
-	width: 95%;
+	width: 92%;
+}
+
+#links h2 {
+	margin-bottom: 0px;
 }
 
 .notes {
