@@ -2,6 +2,7 @@ set :application, "laterz"
 # i think this is how it goes based on
 # http://github.com/guides/deploying-with-capistrano
 set :repository,  "git@github.com:railsrumble/rr09-team-162.git"
+set :branch, "railsrumble09"
 
 # If you aren't deploying to /u/apps/#{application} on the target
 # servers (which is the default), you can specify the actual location
