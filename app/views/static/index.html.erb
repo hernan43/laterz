@@ -24,6 +24,8 @@ welcome
 
 <p>Submit using a normal form or use a bookmark bar shortcut to make saving quicker and easier.</p>
 
+<p>See <span  style="font-size: 2.0em"><%= link_to "how it works", how_it_works_path %></span></p>
+
 <% if not current_user %>
 <p class="call_to_arms">
 Please <%= link_to "Login", login_path %> or <%= link_to "Register", register_path %>	
