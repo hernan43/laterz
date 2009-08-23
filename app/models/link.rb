@@ -24,6 +24,8 @@ class Link < ActiveRecord::Base
   
   def set_favicon
     # this will set the favicon at some point
+    # >> doc.xpath("/html/head/link[@rel='shortcut icon']")[0]['href']
+    # => "http://a1.twimg.com/a/1250809294/images/favicon.ico"
   end
   
   def strip_bad_categories
