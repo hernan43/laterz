@@ -5,4 +5,8 @@ class StaticController < ApplicationController
       redirect_to links_path
     end
   end
+  
+  def how_it_works
+  end
+  
 end
