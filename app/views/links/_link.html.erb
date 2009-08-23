@@ -4,18 +4,18 @@
 <%= hidden_field_tag(:return) if params[:return] %>
 <ul class="form_list">
   <li>  
-    <%= f.label :url, "url" %>  
+    <%= f.label :url, "url" %><br/>
     <%= f.text_field(:url, :value => params[:url] || nil) %>  
   </li>  
   
 	<li>
-	<%= f.label :category, "category" %>
+	<%= f.label :category, "category" %><br/>
 	<%= f.collection_select(:category_id, current_user.categories, :id, :name, options = {:prompt => "select a category"}) %>
 	</li>
 	
 	<li>
 	<%= f.label :notes, "notes (optional)" %><br/>
-	<%= f.text_area :notes, :cols => 60, :rows => 5 %>
+	<%= f.text_area :notes, :cols => 40, :rows => 5 %>
 	</li>
   
   <li>  

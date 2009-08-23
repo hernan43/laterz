@@ -102,6 +102,9 @@ textarea {
 	margin-top: 0px;
 }
 
+#link_form {
+	margin-left: 5px;
+}
 
 #link_list {
 	background: #ffffff;
@@ -115,6 +118,10 @@ textarea {
 	border-bottom: 1px dotted #cccccc;
 	list-style: none;
 	padding: 5px 7px;
+}
+
+#links h2 {
+	margin-bottom: 0px;
 }
 
 #main {
@@ -146,13 +153,19 @@ ul#link_list {
 	text-decoration: none;
 }
 
+.form_list li {
+	list-style: none;
+}
+
+ul.form_list {
+	margin: 0px;
+	margin-bottom: 10px;
+	padding: 0px;
+}
+
 .link_title {
 	display: inline-block;
 	width: 92%;
-}
-
-#links h2 {
-	margin-bottom: 0px;
 }
 
 .notes {

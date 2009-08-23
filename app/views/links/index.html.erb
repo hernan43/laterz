@@ -12,9 +12,9 @@
 
 <div id="links">
 	<% if @category %>
-		<h2>Links for <%=h @category.name %></h2>
+		<h2><%=h @category.name %></h2>
 	<% else %>
-		<h2>Links with no category</h2>
+		<h2>uncategorized</h2>
 	<% end %>
 
 	<%= render :partial => 'links_list', :locals => {:links => @links} %>
