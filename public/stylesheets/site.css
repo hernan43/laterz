@@ -45,6 +45,15 @@ input[type="text"] {
 	color: #666666;
 }
 
+input#user_openid_identifier, 
+input#user_session_openid_identifier {
+  background: url(http://openid.net/images/login-bg.gif) no-repeat;
+  background-color: #FFF;
+  color: #000;
+  background-position: 0 50%;
+  padding-left: 18px;
+}
+
 textarea {
 	font-size: 1.3em;
 }
@@ -102,8 +111,11 @@ textarea {
 	margin-top: 0px;
 }
 
-#link_form {
+#link_form,
+#user_form {
 	margin-left: 5px;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
 }
 
 #link_list {

@@ -1,3 +1,13 @@
+<% content_for :title do %> 
+| 
+	<% if @category %>
+		<%=h @category.name %>
+	<% else %>
+		uncategorized
+	<% end %>
+	
+<% end %>
+
 <div id="categories">
 	<h3>Categories</h3>
 	<%= render :partial => 'category_list' %>
