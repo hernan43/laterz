@@ -1,10 +1,13 @@
 <li id="<%= "link-#{link.id}" %>">
 
-<%= link_to link.get_title, link.url %> <%= link_to "edit", edit_link_path(link) %>
-<%= link_to_remote "delete", :url => link_url(link), :method => :delete %>
+<span class="link_title"><%= link_to link.get_title, link.url %></span>
+<span class="tool_links">
+<%= link_to image_tag("icons/page_edit.png", :alt => "edit"), edit_link_path(link) %>
+<%= link_to_remote image_tag("icons/delete.png", :alt => "delete"), :url => link_url(link), :method => :delete %>
+</span>
 
 <% if link.notes %>
-<p><%=h(link.notes) %></p>
+<p class="notes"><%=h(link.notes) %></p>
 <% end %>
 
 </li>
