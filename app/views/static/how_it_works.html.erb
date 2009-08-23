@@ -6,3 +6,33 @@
 	Using Laterz
 </h2>
 
+<p>
+<%= image_tag 'user_page_small_noted.png', :alt => 'user page' %><br/>
+<span class="caption">Sample user page</span>
+</p>
+
+<h3>Logging in</h3>
+
+<p>Logins and authentication (and for that matter registration) are handled using <a href="http://openid.net/" title="OpenID Foundation website">OpenID</a>. You will need an OpenID in order to register and login to Laterz. If you do not have one try using <a href="https://www.myopenid.com/">myOpenID</a>, they are pretty good. Though it is worth noting that many places like <a href="http://www.google.com/" title="Google">Google</a>, <a href="http://www.yahoo.com/" title="Yahoo!">Yahoo</a>, and various blogging services provide OpenIDs to their users.
+</p>
+
+<p>When you first login you will be taken to your user page.</p>
+
+<p>On the left side is the list of categories(1) you have. If this is your first time, you will have the default 'uncategorized' category. Any links that have no category automatically go in the uncategorized section. Each category has a count of links stating how many links are in said category.</p>
+
+<h3>Categories</h3>
+<p>Each category has edit <%= image_tag 'icons/page_edit.png', :alt => 'edit icon' %>, delete <%= image_tag 'icons/delete.png', :alt => 'delete icon' %>, and shortcut <%= image_tag 'icons/disk.png', :alt => 'shortcut icon' %> icons.
+</p>
+
+<p>Clicking the edit icon <%= image_tag 'icons/page_edit.png', :alt => 'edit icon' %> will let you edit the name of the category. Clicking the delete icon <%= image_tag 'icons/delete.png', :alt => 'delete icon' %> will delete the category and any links in it.</p>
+
+<p>The shortcut icon <%= image_tag 'icons/disk.png', :alt => 'shortcut icon' %> is where the real power is. Each category has its own. Dragging the shortcut icon to the bookmarks bar creates a bookmark that, when clicked, will save the current website for later.
+</p>
+
+<p>The bookmarks for the individual categories will save the current webpage in the respective category with one click. For instance if you are looking for links on cherry trees, you could create a cherry tree category, drag the shortcut to your bookmarks bar and go trawling for cherry tree links.
+</p>
+
+<h3>Links</h3>
+<p>At the bottom of the links page is a form to add new links(2). Enter a URL and optionally select a category or add notes. Hit the submit button and your URL is saved for later.</p>
+
+On the right side of the screen is the links list(3). The links list contains any links saved in the current category. Here you can edit <%= image_tag 'icons/page_edit.png', :alt => 'edit icon' %> or delete <%= image_tag 'icons/delete.png', :alt => 'delete icon' %> links.

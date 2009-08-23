@@ -24,6 +24,7 @@ http://www.famfamfam.com/lab/icons/silk/
 		
 		<div id="account_info">
 			<% if current_user %>
+				<%= link_to "Links", links_path %> | 
 				<%= link_to "Logout", logout_path %>
 			<% else %>
 				<%= link_to "Login", login_path %> or
