@@ -14,7 +14,35 @@
   border: solid 1px #C66;
 }
 */
+
+* {
+	font-family: 'Trebuchet MS',arial,helvetica,clean,sans-serif;
+}
+
+input[type="submit"] {
+	font-size: 1.3em;
+}
+
+input[type="text"] {
+	font-size: 1.3em;
+	color: #666666;
+}
+
+textarea {
+	font-size: 1.3em;
+}
+
+#category_list {
+	margin-left: 0px;
+	padding-left: 0px;
+}
+
+#category_list li {
+	list-style: none;
+}
+
 #link_list {
+	border: 1px solid #dddddd;
 	margin-left: 0px;
 	padding-left: 0px;
 	width: 85%;
@@ -23,12 +51,16 @@
 #link_list li {
 	border-bottom: 1px solid #dddddd;
 	list-style: none;
-	padding: 3px 5px;
+	padding: 5px 3px;
 }
 
 .link_title {
 	display: inline-block;
 	width: 95%;
+}
+
+.notes {
+	color: #333333;
 }
 
 .tool_links img {
