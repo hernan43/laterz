@@ -2,12 +2,30 @@
 welcome
 <% end %>
 
-<h1>
+<h2>
 	Welcome to Laterz!
-</h1>
+</h2>
+
+<em>Laterz is an app that let's you save URLs for viewing at a later time.</em>
+
+<ul>	
+
+<li>Maybe you stumble on a web site that you want to check out later.</li>
+
+<li>Maybe you are at work and stumble on a <a href="http://www.iamlost.com/features/robotporn/" title="YPL: Vintage Robot Porn">robot porn</a> site and don't want to get caught browsing.</li>
+
+<li>Or maybe you are like me and like to compile URLs for a blog posts, and end up with scads of these one-off bookmark folders that end up getting deleted when you are done.</li>
+
+</ul>
+
+<p>If you you fit any of these, Laterz can be your huckleberry.</p>
+
+<p>A <a href="http://en.wikipedia.org/wiki/Time_shifting" title="Time shifting - Wikipedia, the free encyclopedia">time shifting</a> service for URLs, Laterz lets you save and categorize URLs with the click of a button.</p>
+
+<p>Submit using a normal form or use a bookmark bar shortcut to make saving quicker and easier.</p>
 
 <% if not current_user %>
-<p>
+<p class="call_to_arms">
 Please <%= link_to "Login", login_path %> or <%= link_to "Register", register_path %>	
 </p>
 <% else %>

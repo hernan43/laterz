@@ -107,6 +107,18 @@ textarea {
 	margin-top: 0px;
 }
 
+#legend {
+	background: #ffffff;
+	border: 1px dotted #1b325f;
+	padding : 5px;
+	
+}
+
+#legend h4 {
+	margin-top: 3px;
+	padding-top: 0px;
+}
+
 #link_form,
 #user_form {
 	margin-left: 5px;

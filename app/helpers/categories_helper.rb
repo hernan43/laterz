@@ -7,7 +7,7 @@ module CategoriesHelper
       category_id_stub = "&amp;category_id=#{category.id}"
       alt_text = "save this to #{h(category.name)}"
     end
-    link_text = image_tag("icons/wrench.png", :alt => alt_text)
+    link_text = image_tag("icons/disk.png", :alt => alt_text)
     
     "<a href=\"javascript:void(location.href='#{new_link_url}?return=true#{category_id_stub}&amp;url='+encodeURIComponent(location.href))\" onmouseover=\"window.status='';return true\" onclick=\"return false\">#{link_text}</a>"
   end
