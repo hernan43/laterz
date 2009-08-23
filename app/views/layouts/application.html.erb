@@ -19,21 +19,35 @@ http://www.famfamfam.com/lab/icons/silk/
 </head>
 <body>
 
-<div id="main"><div class="wrapper">
+<div id="main">
+	<div class="wrapper">
 
-<%# if not flash[:notice].nil? %>
-<div id="notice"><%= flash[:notice] %></div> 
-<%# end %>
-<%# if not flash[:error].nil? %>
-<div id="error"><%= flash[:error] %></div>
-<%# end %>
+	<%# if not flash[:notice].nil? %>
+	<div id="notice"><%= flash[:notice] %></div> 
+	<%# end %>
+	<%# if not flash[:error].nil? %>
+	<div id="error"><%= flash[:error] %></div>
+	<%# end %>
 
-<div id="header">
-</div>
+	<div id="header">
+		
+		<div id="account_info">
+			<% if current_user %>
+				<%= link_to "Logout", logout_path %>
+			<% else %>
+				<%= link_to "Login", login_path %> or
+				<%= link_to "Register", register_path %>
+			<% end %>
+		</div>
+		
+		<h1>Laterz</h1>
+		<h3>Save it for laterz</h3>
+	</div>
 
 <%= yield  %>
 
-<div class="clear"></div>
-</div></div>
+	<div class="clear"></div>
+	</div>
+</div>
 </body>
 </html>

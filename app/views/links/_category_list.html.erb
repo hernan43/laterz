@@ -1,21 +1,22 @@
 <ul id="category_list">
 	<li>
-	<%= link_to "uncategorized", links_path %> 
-	<span class="quick_url">
-		<%= generate_category_shortcut_link %>
+	<span class="category_link">
+	<%= link_to "uncategorized", links_path %>
+	</span> 
+	<span class="tool_links">
+	<%= generate_category_shortcut_link %>
 	</span>
 	</li>
 <% current_user.categories.each do |category| %>
 	<li id="<%= "category-#{category.id}" %>">
-	
+	<span class="category_link">
 	<%= link_to "#{h(category.name)} (#{category.count})", links_path({:category_id => category.id}) %> 
-	<div class="tool_links">
+	</span>
+	<span class="tool_links">
 		<%= link_to image_tag("icons/page_edit.png", :alt => "edit"), edit_category_path(category) %>
 		<%= link_to_remote image_tag("icons/delete.png", :alt => "delete"), :url => category_url(category), :method => :delete %>
-		<span class="quick_url">
-			<%= generate_category_shortcut_link(category) %>
-		</span>
-	</div>
+		<%= generate_category_shortcut_link(category) %>
+	</span>
 	
 	</li>
 <% end %>

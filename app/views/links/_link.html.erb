@@ -1,4 +1,6 @@
+<div id="new_link_errors">
 <%= f.error_messages %>
+</div>
 <%= hidden_field_tag(:return) if params[:return] %>
 <ul class="form_list">
   <li>  
@@ -13,7 +15,7 @@
 	
 	<li>
 	<%= f.label :notes, "notes (optional)" %><br/>
-	<%= f.text_area :notes, :cols => 80, :rows => 5 %>
+	<%= f.text_area :notes, :cols => 60, :rows => 5 %>
 	</li>
   
   <li>  

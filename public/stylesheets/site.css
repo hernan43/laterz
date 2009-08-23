@@ -16,7 +16,24 @@
 */
 
 * {
-	font-family: 'Trebuchet MS',arial,helvetica,clean,sans-serif;
+	font-family: 'Lucida Grande', 'Trebuchet MS',arial,helvetica,clean,sans-serif;
+}
+
+a {
+	color: #f26c24;
+}
+
+a:visited {
+	color: #3c89c8;
+}
+
+body {
+	background: #1b325f;
+	font-size: 1.0em;	
+}
+
+h1,h2,h3,h4,h5 {
+	color: #1b325f;
 }
 
 input[type="submit"] {
@@ -32,40 +49,101 @@ textarea {
 	font-size: 1.3em;
 }
 
+#account_info {
+	float: right;
+}
+
 #categories {
+	background: #eef8fe;
+	border-top: 1px solid #ffffff;
 	float: left;
+	padding: 1%;
 	width: 20%;
 }
 
 #links {
+	background: #eef8fe;
+	border-top: 1px solid #ffffff;
 	float: right;
-	width: 80%;
+	width: 78%;
 }
 
 #category_list {
-	margin-left: 0px;
-	padding-left: 0px;
+	margin: 0px;
+	padding: 0px;
 }
 
 #category_list li {
 	list-style: none;
 }
 
+#header {
+	background: #f26c24;
+	border-bottom: 1px solid #000000;
+	padding: 10px;
+}
+
+#header a {
+	color: #1b325f;
+	text-decoration: none;
+}
+
+#header h1 {
+	color: #ffffff;
+	font-weight: bold;
+	padding: 0px;
+	margin: 0px;
+}
+
+#header h3 {
+	color: #ffffff;
+	font-style: italic;
+	font-weight: normal;
+	margin-top: 0px;
+}
+
+
 #link_list {
-	border: 1px solid #eeeeee;
-	margin-left: 0px;
+	background: #ffffff;
+	border: 1px solid #aaaaaa;
+	margin-left: 5px;
 	padding-left: 0px;
 	width: 85%;
 }
 
 #link_list li {
-	border-bottom: 1px solid #eeeeee;
+	border-bottom: 1px dotted #cccccc;
 	list-style: none;
 	padding: 5px 7px;
 }
 
+#main {
+	padding: 20px;
+}
+
 ul#link_list {
 	margin-top: 0px;
+}
+
+.category_link {
+	background: #f26c24;
+	border-top: 1px solid #ffd9bf;
+	border-left: 1px solid #ffd9bf;
+	border-bottom: 1px solid #b34700;
+	border-right: 1px solid #b34700;
+	display: inline-block;
+	padding: 3px;
+	width: 150px;
+}
+
+.category_link a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.category_link a:visited {
+	color: #ffffff;
+	text-decoration: none;
 }
 
 .link_title {
@@ -85,3 +163,6 @@ ul#link_list {
 	border: 0px;
 }
 
+.wrapper {
+	background: #eef8fe;
+}

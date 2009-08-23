@@ -9,6 +9,18 @@ class Link < ActiveRecord::Base
   before_save :strip_bad_categories
   after_create :update_category_count
   
+  # just make sure urls are regular format
+  def validate
+    begin
+     uri = URI.parse(url)
+     if uri.class != URI::HTTP and uri.class != URI::HTTPS
+       errors.add(:url, 'Only HTTP(S) protocol addresses can be used')
+     end 
+    rescue URI::InvalidURIError
+     errors.add(:url, 'The format of the url is not valid.')
+    end 
+  end
+  
   # this is for printing
   def get_title
     self.title || self.url
