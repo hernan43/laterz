@@ -63,16 +63,12 @@ textarea {
 }
 
 #categories {
-	background: #eef8fe;
-	border-top: 1px solid #ffffff;
 	float: left;
 	padding: 1%;
 	width: 20%;
 }
 
 #links {
-	background: #eef8fe;
-	border-top: 1px solid #ffffff;
 	float: right;
 	width: 78%;
 }
@@ -105,7 +101,7 @@ textarea {
 }
 
 #header h3 {
-	color: #ffffff;
+	color: #1b325f;
 	font-style: italic;
 	font-weight: normal;
 	margin-top: 0px;
@@ -165,6 +161,8 @@ ul#link_list {
 	text-decoration: none;
 }
 
+.clear { clear: both; }
+
 .form_list li {
 	list-style: none;
 }
@@ -190,4 +188,6 @@ ul.form_list {
 
 .wrapper {
 	background: #eef8fe;
+	border-top: 1px solid #ffffff;
+	padding: 10px;
 }
