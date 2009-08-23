@@ -89,12 +89,13 @@ textarea {
 }
 
 #header a {
-	color: #1b325f;
+	color: #ffffff;
 	text-decoration: none;
 }
 
 #header h1 {
 	color: #ffffff;
+	font-size: 2.5em;
 	font-weight: bold;
 	padding: 0px;
 	margin: 0px;
@@ -150,6 +151,15 @@ textarea {
 
 ul#link_list {
 	margin-top: 0px;
+}
+
+.call_to_arms {
+	background: #1b325f;
+	color: #ffffff;
+	font-size: 1.75em;
+	font-weight: bold;
+	padding: 15px;
+	text-align: center;
 }
 
 .category_link {
