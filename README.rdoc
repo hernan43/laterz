@@ -1,7 +1,12 @@
 = Laterz
 
+== Description
 Laterz was my entry in the Rails Rumble 2009 48 hour programming contest.
 
 Laterz was to be an app that facilitated the *temporary* storage of URLs across machines. It allowed for categorizing. It also utilized bookmark bar shortcuts to auto-file saved URLs in a particualr category.
 
 It's specialty was for temporary storage as opposed to permanent. This is good for articles, blog postsi, news stories, and the like that you only want to read once.
+
+== Todo
+
+This app neds a lot of work still. The color scheme is hideous. The font scheme could use some love. CSS styles need to be applied to notices.
