@@ -1,8 +1,8 @@
-require File.expand_path(File.join(File.dirname(__FILE__),'..','..','test_helper')) 
+require File.expand_path(File.join(File.dirname(__FILE__),'..','..','test_helper'))
 require 'active_record_fixtures'
 
 class ActiveRecordInstrumentationTest < Test::Unit::TestCase
-  
+
   def setup
     NewRelic::Agent.manual_start
     NewRelic::Agent.instance.stats_engine.clear_stats
@@ -12,7 +12,7 @@ class ActiveRecordInstrumentationTest < Test::Unit::TestCase
     puts e
     puts e.backtrace.join("\n")
   end
-  
+
   def teardown
     ActiveRecordFixtures.teardown
   end
@@ -28,7 +28,7 @@ class ActiveRecordInstrumentationTest < Test::Unit::TestCase
     s = NewRelic::Agent.get_stats("ActiveRecord/ActiveRecordFixtures::Order/find")
     assert_equal 2, s.call_count
   end
-  
+
   # multiple duplicate find calls should only cause metric trigger on the first
   # call.  the others are ignored.
   def test_query_cache
@@ -37,21 +37,21 @@ class ActiveRecordInstrumentationTest < Test::Unit::TestCase
       ActiveRecordFixtures::Order.find(:all)
       s = NewRelic::Agent.get_stats("ActiveRecord/ActiveRecordFixtures::Order/find")
       assert_equal 1, s.call_count
-      
+
       10.times { ActiveRecordFixtures::Order.find m.id }
     end
     s = NewRelic::Agent.get_stats("ActiveRecord/ActiveRecordFixtures::Order/find")
-    assert_equal 2, s.call_count    
+    assert_equal 2, s.call_count
   end
-  
+
   def test_metric_names
     m = ActiveRecordFixtures::Order.create :id => 0, :name => 'jeff'
     m = ActiveRecordFixtures::Order.find(m.id)
     m.id = 999
     m.save!
-    
+
     metrics = NewRelic::Agent.instance.stats_engine.metrics
-    #   This doesn't work on hudson because the sampler metrics creep in.    
+    #   This doesn't work on hudson because the sampler metrics creep in.
     #   metrics = NewRelic::Agent.instance.stats_engine.metrics.select { |mname| mname =~ /ActiveRecord\/ActiveRecordFixtures::Order\// }.sort
     expected = %W[
       ActiveRecord/all
@@ -60,7 +60,7 @@ class ActiveRecordInstrumentationTest < Test::Unit::TestCase
       ActiveRecord/ActiveRecordFixtures::Order/create
       ActiveRecord/ActiveRecordFixtures::Order/find
       ]
-    expected += %W[ActiveRecord/save ActiveRecord/ActiveRecordFixtures::Order/save] if NewRelic::Control.instance.rails_version < '2.1.0'   
+    expected += %W[ActiveRecord/save ActiveRecord/ActiveRecordFixtures::Order/save] if NewRelic::Control.instance.rails_version < '2.1.0'
     compare_metrics expected, metrics
     assert_equal 1, NewRelic::Agent.get_stats("ActiveRecord/ActiveRecordFixtures::Order/find").call_count
     assert_equal 1, NewRelic::Agent.get_stats("ActiveRecord/ActiveRecordFixtures::Order/create").call_count
@@ -71,9 +71,9 @@ class ActiveRecordInstrumentationTest < Test::Unit::TestCase
     s = m.shipments.create
     m.shipments.to_a
     m.destroy
-    
+
     metrics = NewRelic::Agent.instance.stats_engine.metrics
-    #   This doesn't work on hudson because the sampler metrics creep in.    
+    #   This doesn't work on hudson because the sampler metrics creep in.
     #   metrics = NewRelic::Agent.instance.stats_engine.metrics.select { |mname| mname =~ /ActiveRecord\/ActiveRecordFixtures::Order\// }.sort
     compare_metrics %W[
     ActiveRecord/all
@@ -102,13 +102,13 @@ class ActiveRecordInstrumentationTest < Test::Unit::TestCase
     ], metrics
     assert_equal 1, NewRelic::Agent.get_stats("Database/SQL/select").call_count
   end
-  
+
   def test_run_explains
     ActiveRecordFixtures::Order.add_delay
     ActiveRecordFixtures::Order.find(:all)
-    
+
     sample = NewRelic::Agent.instance.transaction_sampler.last_sample
-    
+
     segment = sample.root_segment.called_segments.first.called_segments.first
     assert_match /^SELECT \* FROM ["`]?#{ActiveRecordFixtures::Order.table_name}["`]?$/i, segment.params[:sql].strip
     NewRelic::TransactionSample::Segment.any_instance.expects(:explain_sql).returns([])
@@ -118,9 +118,9 @@ class ActiveRecordInstrumentationTest < Test::Unit::TestCase
   def test_prepare_to_send
     ActiveRecordFixtures::Order.add_delay
     ActiveRecordFixtures::Order.find(:all)
-    
+
     sample = NewRelic::Agent.instance.transaction_sampler.last_sample
-    # 
+    #
     sql_segment = sample.root_segment.called_segments.first.called_segments.first
     assert_match /^SELECT /, sql_segment.params[:sql]
     assert sql_segment.duration > 0.0, "Segment duration must be greater than zero."
@@ -130,34 +130,34 @@ class ActiveRecordInstrumentationTest < Test::Unit::TestCase
     explanations = sql_segment.params[:explanation]
     if isMysql? || isPostgres?
       assert_not_nil explanations, "No explains in segment: #{sql_segment}"
-      assert_equal 1, explanations.size,"No explains in segment: #{sql_segment}" 
+      assert_equal 1, explanations.size,"No explains in segment: #{sql_segment}"
       assert_equal 1, explanations.first.size
     end
   end
   def test_transaction
     ActiveRecordFixtures::Order.add_delay
     ActiveRecordFixtures::Order.find(:all)
-    
+
     sample = NewRelic::Agent.instance.transaction_sampler.last_sample
-    
+
     sample = sample.prepare_to_send(:obfuscate_sql => true, :explain_enabled => true, :explain_sql => 0.0)
     segment = sample.root_segment.called_segments.first.called_segments.first
     assert_nil segment.params[:sql], "SQL should have been removed."
     explanations = segment.params[:explanation]
     if isMysql? || isPostgres?
       assert_not_nil explanations, "No explains in segment: #{segment}"
-      assert_equal 1, explanations.size,"No explains in segment: #{segment}" 
+      assert_equal 1, explanations.size,"No explains in segment: #{segment}"
       assert_equal 1, explanations.first.size
-    end    
+    end
     if isPostgres?
       assert_equal Array, explanations.class
       assert_equal Array, explanations[0].class
       assert_equal Array, explanations[0][0].class
-      assert_match /Seq Scan on test_data/, explanations[0][0].join(";") 
+      assert_match /Seq Scan on test_data/, explanations[0][0].join(";")
     elsif isMysql?
       assert_equal "1;SIMPLE;#{ActiveRecordFixtures::Order.table_name};ALL;;;;;1;", explanations.first.first.join(";")
     end
-    
+
     s = NewRelic::Agent.get_stats("ActiveRecord/ActiveRecordFixtures::Order/find")
     assert_equal 1, s.call_count
   end
@@ -176,7 +176,7 @@ class ActiveRecordInstrumentationTest < Test::Unit::TestCase
       assert_equal before_count+1, s.call_count
     end
   end
-  
+
   private
   def compare_metrics expected_list, actual_list
     actual = Set.new actual_list
@@ -187,6 +187,6 @@ class ActiveRecordInstrumentationTest < Test::Unit::TestCase
     ActiveRecordFixtures::Order.configurations[RAILS_ENV]['adapter'] =~ /postgres/
   end
   def isMysql?
-    ActiveRecordFixtures::Order.connection.class.name =~ /mysql/i 
+    ActiveRecordFixtures::Order.connection.class.name =~ /mysql/i
   end
 end

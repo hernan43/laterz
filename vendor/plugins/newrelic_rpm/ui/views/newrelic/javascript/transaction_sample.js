@@ -5,7 +5,7 @@ function show_request_params()
 	$('request_params').show();
 }
 function show_view(page_id){
-	['show_sample_summary', 'show_sample_sql', 'show_sample_detail'].each(Element.hide);  
+	['show_sample_summary', 'show_sample_sql', 'show_sample_detail'].each(Element.hide);
 	$(page_id).show();
 }
 function toggle_row_class(theLink)
@@ -90,7 +90,7 @@ function collapse_all_segments()
 function jump_to_metric(metric_name)
 {
 	var elements = $('trace_detail_table').select('tr.' + metric_name);
-	for (var i = 0; i < elements.length; i++) 
+	for (var i = 0; i < elements.length; i++)
 	{
 		new Effect.Highlight(elements[i]); //, {endcolor : 'aliceblue'});
 		//elements[i].setStyle({backgroundColor: 'lightyellow'});
@@ -104,4 +104,4 @@ function sql_mouse_over(id) {
 }
 function sql_mouse_out(id) {
 	UnTip();
-} 
+}

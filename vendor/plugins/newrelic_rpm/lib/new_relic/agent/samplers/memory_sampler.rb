@@ -1,11 +1,11 @@
 module NewRelic::Agent::Samplers
-  
+
   class MemorySampler < NewRelic::Agent::Sampler
     attr_accessor :sampler
-    
+
     def initialize
       super :memory
-      
+
       # macos, linux, solaris
       if defined? Java
         @sampler = JavaHeapSampler.new
@@ -24,7 +24,7 @@ module NewRelic::Agent::Samplers
       elsif platform =~ /solaris/
         @sampler = ShellPS.new("/usr/bin/ps -o rss -p")
       end
-      
+
       raise "Unsupported platform for getting memory: #{platform}" if @sampler.nil?
       raise "Unable to run #{@sampler}" unless @sampler.can_run?
     end
@@ -35,9 +35,9 @@ module NewRelic::Agent::Samplers
         RUBY_PLATFORM.downcase
       end
     end
-    
+
     def stats
-      stats_engine.get_stats("Memory/Physical", false) 
+      stats_engine.get_stats("Memory/Physical", false)
     end
     def poll
       sample = @sampler.get_sample
@@ -98,18 +98,18 @@ module NewRelic::Agent::Samplers
         "shell command sampler: #{@command}"
       end
     end
-    
+
     # ProcStatus
     #
     # A class that samples memory by reading the file /proc/$$/status, which is specific to linux
     #
-    class ProcStatus < Base 
-      
+    class ProcStatus < Base
+
       # Returns the amount of resident memory this process is using in MB
       #
       def get_memory
         File.open(proc_status_file, "r") do |f|
-          while !f.eof? 
+          while !f.eof?
             if f.readline =~ /RSS:\s*(\d+) kB/i
               return $1.to_f / 1024.0
             end
@@ -124,5 +124,5 @@ module NewRelic::Agent::Samplers
         "proc status file sampler: #{proc_status_file}"
       end
     end
-  end    
-end  
+  end
+end

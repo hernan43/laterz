@@ -20,7 +20,7 @@ if !command_list.include?(command)
   STDERR.puts options
 else
   require File.join(libdir, 'new_relic','commands', command + ".rb")
-  command_class = NewRelic::Commands.const_get(command.capitalize) 
+  command_class = NewRelic::Commands.const_get(command.capitalize)
   begin
     command_class.new(extra).run
   rescue NewRelic::Commands::CommandFailure => failure
