@@ -1,4 +1,4 @@
-# Defining a test controller class with a superclass, used to 
+# Defining a test controller class with a superclass, used to
 # verify correct attribute inheritence
 class NewRelic::Agent::SuperclassController <  ActionController::Base
   def base_action
@@ -14,7 +14,7 @@ class NewRelic::Agent::AgentTestController < NewRelic::Agent::SuperclassControll
   ActionController::Routing::Routes.draw do | map |
     map.connect ':controller/:action.:format'
   end
-  
+
   def index
     render :text => params.inspect
   end
@@ -33,7 +33,7 @@ class NewRelic::Agent::AgentTestController < NewRelic::Agent::SuperclassControll
   def entry_action
     perform_action_with_newrelic_trace('internal_action') do
       internal_action
-    end    
+    end
   end
   private
   def internal_action

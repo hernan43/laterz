@@ -6,20 +6,20 @@ module ActiveRecord
       end
     end
   end
-  
+
   class Connection
     attr_accessor :throw
     attr_reader :disconnected
-    
+
     def initialize
       @disconnected = false
       @throw = false
     end
-    
+
     def disconnect!()
       @disconnected = true
     end
-    
+
     def find()
       # used to test that we've instrumented this...
     end
@@ -30,7 +30,7 @@ module ActiveRecord
     def execute(s)
       fail "" if @throw
       if s != "EXPLAIN #{::SQL_STATEMENT}"
-        fail "Unexpected sql statement #{s}"        
+        fail "Unexpected sql statement #{s}"
       end
       s
     end

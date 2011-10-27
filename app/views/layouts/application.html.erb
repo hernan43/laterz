@@ -6,14 +6,14 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>Laterz <%= yield :title %></title>
   <%= stylesheet_link_tag 'site' %>
-  
+
   <%= javascript_include_tag :defaults %>
 
 <!--
 Most if not all of the icons on this site are courtesy of the FamFam Silk Icon Set
 
 http://www.famfamfam.com/
-http://www.famfamfam.com/lab/icons/silk/	
+http://www.famfamfam.com/lab/icons/silk/
 -->
 
 </head>
@@ -21,17 +21,17 @@ http://www.famfamfam.com/lab/icons/silk/
 
 <div id="main">
 	<div id="header">
-		
+
 		<div id="account_info">
 			<% if current_user %>
-				<%= link_to "Links", links_path %> | 
+				<%= link_to "Links", links_path %> |
 				<%= link_to "Logout", logout_path %>
 			<% else %>
 				<%= link_to "Login", login_path %> or
 				<%= link_to "Register", register_path %>
 			<% end %>
 		</div>
-		
+
 		<h1><%= link_to "Laterz", root_path %></h1>
 		<h3>Save it until later</h3>
 	</div>
@@ -39,7 +39,7 @@ http://www.famfamfam.com/lab/icons/silk/
 	<div class="wrapper">
 
 	<%# if not flash[:notice].nil? %>
-	<div id="notice"><%= flash[:notice] %></div> 
+	<div id="notice"><%= flash[:notice] %></div>
 	<%# end %>
 	<%# if not flash[:error].nil? %>
 	<div id="error"><%= flash[:error] %></div>

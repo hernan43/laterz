@@ -1,25 +1,25 @@
-<% content_for :title do %> 
+<% content_for :title do %>
 | log in
-<% end %>  
-  
+<% end %>
+
 <h2>Login using OpenID</h2>
 
 <p>
 	Please be sure that you have <%= link_to "registered", register_path %> before you attempt to login.
 </p>
 
-<% form_for @user_session do |form| %>  
-<%= form.error_messages %> 
- 
+<% form_for @user_session do |form| %>
+<%= form.error_messages %>
+
 <div id="user_form">
-<ul class="form_list">  
-  <li>  
+<ul class="form_list">
+  <li>
     <%= form.label :openid_identifier, "openid url"%><br/>
-    <%= form.text_field :openid_identifier %>  
-  </li>  
-  <li>  
-    <%= form.submit "submit" %>  
-  </li>  
-</ul>  
+    <%= form.text_field :openid_identifier %>
+  </li>
+  <li>
+    <%= form.submit "submit" %>
+  </li>
+</ul>
 </div>
 <% end %>

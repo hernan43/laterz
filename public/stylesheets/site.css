@@ -3,12 +3,12 @@
   padding: 5px 8px;
   margin: 10px 0;
 }
- 
+
 #notice {
   background-color: #CFC;
   border: solid 1px #6C6;
 }
- 
+
 #error {
   background-color: #FCC;
   border: solid 1px #C66;
@@ -29,7 +29,7 @@ a:visited {
 
 body {
 	background: #1b325f;
-	font-size: 1.0em;	
+	font-size: 1.0em;
 }
 
 h1,h2,h3,h4,h5 {
@@ -45,7 +45,7 @@ input[type="text"] {
 	color: #666666;
 }
 
-input#user_openid_identifier, 
+input#user_openid_identifier,
 input#user_session_openid_identifier {
   background: url(http://openid.net/images/login-bg.gif) no-repeat;
   background-color: #FFF;
@@ -112,7 +112,7 @@ textarea {
 	background: #ffffff;
 	border: 1px dotted #1b325f;
 	padding : 5px;
-	
+
 }
 
 #legend h4 {

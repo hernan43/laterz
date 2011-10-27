@@ -13,75 +13,75 @@ class MetricParserTest < Test::Unit::TestCase
   end
   def test_controller
     ["Controller", "Controller/1/2/3","Controller//!!#!//"].each do | metric_name |
-      m = NewRelic::MetricParser.for_metric_named(metric_name)      
+      m = NewRelic::MetricParser.for_metric_named(metric_name)
       assert m.is_controller?
       assert !m.is_view?
       assert !m.is_database?
       assert !m.is_web_service?
     end
-    
+
     ["Controller+1/2/3","Lew//!!#!//"].each do | metric_name |
       m = NewRelic::MetricParser.for_metric_named(metric_name)
-      
+
       assert !m.is_controller?
     end
   end
-  
+
   def test_controller_cpu
     ["Controller/1/2/3","Controller//!!#!//"].each do | metric_name |
       m = NewRelic::MetricParser.for_metric_named(metric_name)
-      
+
       assert m.is_controller?
       assert !m.is_view?
       assert !m.is_database?
       assert !m.is_web_service?
     end
-    
+
     ["ControllerCPU/1/2/3","ControllerCPU//!!#!//"].each do | metric_name |
       m = NewRelic::MetricParser.for_metric_named(metric_name)
-      
+
       assert m.is_controller_cpu?
       assert !m.is_view?
       assert !m.is_controller?
       assert !m.is_database?
       assert !m.is_web_service?
-      
+
       assert_not_nil m.base_metric_name
       assert m.base_metric_name.starts_with?('Controller/')
     end
-    
+
   end
-  
+
   def test_web_service
     ["WebService/x/Controller/", "WebService","WebService/1/2/3","WebService//!!#!//"].each do |metric_name|
       m = NewRelic::MetricParser.for_metric_named(metric_name)
-      
+
       assert !m.is_controller?
       assert !m.is_view?
       assert !m.is_database?
       assert m.is_web_service?
     end
-    
+
     ["Web/Service","WEBService+1/2/3","Lew//!!#!//"].each do | metric_name |
       m = NewRelic::MetricParser.for_metric_named(metric_name)
-      
+
       assert !m.is_web_service?, metric_name
     end
   end
-  
+
   def test_database
     ["ActiveRecord","ActiveRecord/1/2/3","ActiveRecord//!!#!//"].each do | metric_name |
       m = NewRelic::MetricParser.for_metric_named(metric_name)
-      
+
       assert !m.is_view?
       assert !m.is_controller?
       assert m.is_active_record?, "#{metric_name}: #{m.category}"
       assert !m.is_web_service?
     end
-    
+
     ["ActiveRecordxx","ActiveRecord+1/2/3","ActiveRecord#!//"].each do | metric_name |
       m = NewRelic::MetricParser.for_metric_named(metric_name)
-      
+
       assert !m.is_database?
     end
   end
@@ -97,7 +97,7 @@ class MetricParserTest < Test::Unit::TestCase
   end
   def test_view__render
     m = NewRelic::MetricParser.parse "View/blogs/show.html.erb/Rendering"
-    
+
     short_name = "show.html.erb Template"
     long_name = "blogs/show.html.erb Template"
     assert_equal short_name, m.pie_chart_label
@@ -128,14 +128,14 @@ class MetricParserTest < Test::Unit::TestCase
   def test_error
     ["Errors","Errors/Type/MyType","Errors/Controller/MyController/"].each do | metric_name |
       m = NewRelic::MetricParser.for_metric_named(metric_name)
-      
+
       assert !m.is_database?
       assert !m.is_controller?
       assert !m.is_web_service?
       assert !m.is_view?
       assert m.is_error?
     end
-    
+
     m = NewRelic::MetricParser.for_metric_named("Errors/Type/MyType")
     assert_equal m.short_name, 'MyType'
   end

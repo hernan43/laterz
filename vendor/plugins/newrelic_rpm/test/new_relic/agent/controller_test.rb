@@ -1,12 +1,12 @@
-require File.expand_path(File.join(File.dirname(__FILE__),'..','..','test_helper')) 
+require File.expand_path(File.join(File.dirname(__FILE__),'..','..','test_helper'))
 require 'action_controller/base'
 
 class AgentControllerTest < ActionController::TestCase
-  
+
   self.controller_class = NewRelic::Agent::AgentTestController
-  
+
   attr_accessor :agent
-  
+
   # Normally you can do this with #setup but for some reason in rails 2.0.2
   # setup is not called.
   def initialize name
@@ -21,12 +21,12 @@ class AgentControllerTest < ActionController::TestCase
       newrelic_ignore_apdex :only => :action_to_ignore_apdex
     end
   end
-  
+
   def teardown
     Thread.current[:controller_ignored] = nil
     super
   end
-  
+
   def test_metric__ignore
     engine = @agent.stats_engine
     get :action_to_ignore
@@ -66,7 +66,7 @@ class AgentControllerTest < ActionController::TestCase
       end
     end
     assert_nil Thread.current[:controller_ignored]
-    
+
   end
   def test_metric__dispatched
     engine = @agent.stats_engine
@@ -83,25 +83,25 @@ class AgentControllerTest < ActionController::TestCase
       # you might get here if you don't have the default route installed.
     end
   end
-  
+
   def test_controller_params
-    
+
     assert agent.transaction_sampler
-    
+
     num_samples = NewRelic::Agent.instance.transaction_sampler.samples.length
-    
+
     assert_equal "[FILTERED]", @controller._filter_parameters({'social_security_number' => 'test'})['social_security_number']
-    
+
     get :index, 'social_security_number' => "001-555-1212"
-    
+
     samples = agent.transaction_sampler.samples
-    
+
     agent.transaction_sampler.expects(:notice_transaction).never
-    
+
     assert_equal num_samples + 1, samples.length
-    
+
     assert_equal "[FILTERED]", samples.last.params[:request_params]["social_security_number"]
-    
+
   end
-  
+
 end

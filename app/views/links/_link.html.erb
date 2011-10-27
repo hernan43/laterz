@@ -3,22 +3,22 @@
 </div>
 <%= hidden_field_tag(:return) if params[:return] %>
 <ul class="form_list">
-  <li>  
+  <li>
     <%= f.label :url, "url" %><br/>
-    <%= f.text_field(:url, :value => params[:url] || nil) %>  
-  </li>  
-  
+    <%= f.text_field(:url, :value => params[:url] || nil) %>
+  </li>
+
 	<li>
 	<%= f.label :category, "category" %><br/>
 	<%= f.collection_select(:category_id, current_user.categories, :id, :name, options = {:prompt => "select a category"}) %>
 	</li>
-	
+
 	<li>
 	<%= f.label :notes, "notes (optional)" %><br/>
 	<%= f.text_area :notes, :cols => 40, :rows => 5 %>
 	</li>
-  
-  <li>  
-    <%= f.submit "submit" %>  
-  </li>  
+
+  <li>
+    <%= f.submit "submit" %>
+  </li>
 </ul>

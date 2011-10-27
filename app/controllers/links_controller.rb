@@ -1,16 +1,16 @@
 #
 # This file is part of Laterz.
-# 
+#
 # Laterz is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Laterz is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with Laterz.  If not, see <http://www.gnu.org/licenses/>.
 #
@@ -18,7 +18,7 @@
 
 class LinksController < ApplicationController
   before_filter :require_user
-  
+
   def index
     # this is probably a dumb idea to do it this way
     if params[:category_id]
@@ -28,7 +28,7 @@ class LinksController < ApplicationController
       @links = current_user.links.no_category
     end
   end
-  
+
   def new
     @link = Link.new
     @link.category_id = params[:category_id] if params[:category_id]
@@ -37,7 +37,7 @@ class LinksController < ApplicationController
   def create
     @link = Link.new(params[:link])
     @link.user = current_user
-    
+
     respond_to do |format|
       # in case we need to refresh the links list
       if params[:category_id]
@@ -46,16 +46,16 @@ class LinksController < ApplicationController
       else
         @links = current_user.links.no_category
       end
-      
+
       if @link.save
         flash[:notice] = 'Link was successfully created.'
         format.js
-        format.html { 
+        format.html {
           if params[:return]
             redirect_to @link.url
           else
             redirect_back_or_default(links_path)
-          end 
+          end
         }
         format.xml  { render :xml => @link, :status => :created, :location => @link }
       else

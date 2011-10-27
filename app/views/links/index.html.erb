@@ -1,26 +1,26 @@
-<% content_for :title do %> 
-| 
+<% content_for :title do %>
+|
 	<% if @category %>
 		<%=h @category.name %>
 	<% else %>
 		uncategorized
 	<% end %>
-	
+
 <% end %>
 
 <div id="categories">
 	<h3>Categories</h3>
 	<%= render :partial => 'category_list' %>
-	
+
 	<div id="category_form">
 		<strong>add a category</strong>
 		<% form_remote_for(Category.new) do |f| %>
 		<%= render :partial => "categories/category", :locals => {:f => f} %>
 		<% end %>
 	</div>
-	
+
 	<p class="clear"></p>
-	
+
 	<div id="legend">
 		<h4>Legend</h4>
 		<ul>

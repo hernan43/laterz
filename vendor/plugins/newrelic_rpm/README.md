@@ -13,7 +13,7 @@ The New Relic Agent runs in one of two modes:
 **Developer Mode** : Adds a web interface mapped to /newrelic to your
   application for showing detailed performance metrics on a page by
   page basis.
-  
+
 **Production Mode** : Low overhead instrumentation that captures
   detailed information on your application running in production and
   transmits them to rpm.newrelic.com where you can monitor them in
@@ -80,14 +80,14 @@ directory.
 ### Rails Plug-In Installation
 
     script/plugin install http://newrelic.rubyforge.org/svn/newrelic_rpm
-   
+
 ### Gem Installation
 
     sudo gem install newrelic_rpm
 
 For Rails, edit `environment.rb` and add to the initalizer block:
 
-    config.gem "newrelic_rpm" 
+    config.gem "newrelic_rpm"
 
 The Developer Mode is unavailable when using the gem on Rails versions
 prior to 2.0.
@@ -132,7 +132,7 @@ Find a bug?  E-mail support@newrelic.com, or post it to
 Refer to [our website](http://www.newrelic.com/support) for other
 support channels.
 
-Thank you, and may your application scale to infinity plus one.  
+Thank you, and may your application scale to infinity plus one.
 
 Lew Cirne, Founder and CEO<br/>
 New Relic, Inc.
