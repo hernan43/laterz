@@ -1,7 +1,7 @@
-require File.expand_path(File.join(File.dirname(__FILE__),'..','..','test_helper')) 
+require File.expand_path(File.join(File.dirname(__FILE__),'..','..','test_helper'))
 
 class NewRelic::Agent::DispatcherInstrumentationTest < Test::Unit::TestCase
-  
+
   class FunnyDispatcher
     include NewRelic::Agent::Instrumentation::DispatcherInstrumentation
     def newrelic_response_code; end
@@ -17,7 +17,7 @@ class NewRelic::Agent::DispatcherInstrumentationTest < Test::Unit::TestCase
     @mongrel_queue_stat.reset
 
   end
-  
+
   def test_normal_call
     d = FunnyDispatcher.new
     assert_equal 0, NewRelic::Agent::Instrumentation::DispatcherInstrumentation::BusyCalculator.busy_count
@@ -40,7 +40,7 @@ class NewRelic::Agent::DispatcherInstrumentationTest < Test::Unit::TestCase
     NewRelic::Agent::Instrumentation::DispatcherInstrumentation::BusyCalculator.harvest_busy
     NewRelic::Agent::Instrumentation::DispatcherInstrumentation::BusyCalculator.harvest_busy
     NewRelic::Agent::Instrumentation::DispatcherInstrumentation::BusyCalculator.harvest_busy
-    assert_equal 0, @instance_busy.call_count  
+    assert_equal 0, @instance_busy.call_count
   end
   def test_recursive_call
     d0 = FunnyDispatcher.new
@@ -50,7 +50,7 @@ class NewRelic::Agent::DispatcherInstrumentationTest < Test::Unit::TestCase
 
     NewRelic::Agent::Instrumentation::DispatcherInstrumentation::BusyCalculator.harvest_busy
     NewRelic::Agent::Instrumentation::DispatcherInstrumentation::BusyCalculator.harvest_busy
-    assert_equal 0, @instance_busy.call_count  
+    assert_equal 0, @instance_busy.call_count
 
     assert_equal 0, NewRelic::Agent::Instrumentation::DispatcherInstrumentation::BusyCalculator.busy_count
     d0.newrelic_dispatcher_start
@@ -64,7 +64,7 @@ class NewRelic::Agent::DispatcherInstrumentationTest < Test::Unit::TestCase
     assert_equal 0, NewRelic::Agent::Instrumentation::DispatcherInstrumentation::BusyCalculator.busy_count
     assert_nil Thread.current[:newrelic_t0]
     NewRelic::Agent::Instrumentation::DispatcherInstrumentation::BusyCalculator.harvest_busy
-    assert_equal 1, @instance_busy.call_count  
+    assert_equal 1, @instance_busy.call_count
     assert @instance_busy.total_call_time.between?(1.8, 2.1), "Should be about 200%: #{@instance_busy.total_call_time}"
   end
 end

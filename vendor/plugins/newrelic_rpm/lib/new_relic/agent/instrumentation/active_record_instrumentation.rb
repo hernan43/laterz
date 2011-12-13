@@ -1,7 +1,7 @@
 
 # NewRelic instrumentation for ActiveRecord
 if defined?(ActiveRecord::Base) && !NewRelic::Control.instance['skip_ar_instrumentation']
-  
+
   module NewRelic::Agent::Instrumentation::ActiveRecordInstrumentation
 
     def self.included(instrumented_class)
@@ -11,11 +11,11 @@ if defined?(ActiveRecord::Base) && !NewRelic::Control.instance['skip_ar_instrume
         protected :log
       end
     end
-    
+
     def active_record_all_stats
       NewRelic::Agent.instance.stats_engine.get_stats_no_scope("ActiveRecord/all")
     end
-    
+
     def log_with_newrelic_instrumentation(sql, name, &block)
       # Capture db config if we are going to try to get the explain plans
       if (defined?(ActiveRecord::ConnectionAdapters::MysqlAdapter) && self.is_a?(ActiveRecord::ConnectionAdapters::MysqlAdapter)) ||
@@ -36,22 +36,22 @@ if defined?(ActiveRecord::Base) && !NewRelic::Control.instance['skip_ar_instrume
           end
         end
         metric = "ActiveRecord/#{model}/#{metric_name}" if metric_name
-      end      
+      end
       if metric.nil? && sql =~ /^(select|update|insert|delete)/i
         # Could not determine the model/operation so let's find a better
         # metric.  If it doesn't match the regex, it's probably a show
         # command or some DDL which we'll ignore.
         metric = "Database/SQL/#{$1.downcase}"
       end
-      
+
       if !metric
         log_without_newrelic_instrumentation(sql, name, &block)
       else
-        self.class.trace_method_execution_with_scope metric, true, true do        
+        self.class.trace_method_execution_with_scope metric, true, true do
           t0 = Time.now.to_f
           result = log_without_newrelic_instrumentation(sql, name, &block)
           duration = Time.now.to_f - t0
-          
+
           NewRelic::Agent.instance.transaction_sampler.notice_sql(sql, supported_config, duration)
           # Record in the overall summary metric
           active_record_all_stats.record_data_point(duration)
@@ -61,9 +61,9 @@ if defined?(ActiveRecord::Base) && !NewRelic::Control.instance['skip_ar_instrume
         end
       end
     end
-    
+
   end
-  
+
   # instrumentation to catch logged SQL statements in sampled transactions
   ActiveRecord::ConnectionAdapters::AbstractAdapter.module_eval do
     include ::NewRelic::Agent::Instrumentation::ActiveRecordInstrumentation
@@ -77,5 +77,5 @@ if defined?(ActiveRecord::Base) && !NewRelic::Control.instance['skip_ar_instrume
       add_method_tracer :find_by_sql, 'ActiveRecord/#{self.name}/find_by_sql', :metric => false
     end
   end
- 
+
 end

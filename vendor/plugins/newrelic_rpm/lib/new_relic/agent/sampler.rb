@@ -4,9 +4,9 @@ class NewRelic::Agent::Sampler
   def initialize(id)
     @id = id
   end
-  
+
   def poll
     raise "Implement in the subclass"
   end
-  
+
 end

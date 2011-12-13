@@ -1,6 +1,6 @@
 
 
-/*  
+/*
 Originally based on the theme credited below.
 Tweaks by Lew Cirne for Seldon
 
@@ -27,7 +27,7 @@ body{
 #wrap{
 	margin:0 auto;
 	text-align:left;
-	width:76em;	
+	width:76em;
 }
 #content{
 	width: 984px;
@@ -131,7 +131,7 @@ th.left
 {
 	text-align: left;
 }
-th.title 
+th.title
 {
 	font-size: 1.2em;
 	text-align: left;
@@ -144,7 +144,7 @@ td.locals
 	text-align: left;
     font-family: monospace;
 }
- 
+
 /*************************************
 +Seldon Specific - need to preserve
 *************************************/
@@ -152,7 +152,7 @@ td.locals
 {
 	background-color: #FAFEFE;
 }
-div.flash, #errorExplanation 
+div.flash, #errorExplanation
 {
 	margin: 8px 10px 8px 10px;
 	border: 2px;
@@ -170,13 +170,13 @@ div.flash
 	color: #bb0011;
 }
 
-div.flash.error 
+div.flash.error
 {
 	border-color: #bb0011;
 	color: #bb0011;
 }
 
-div.flash.notice 
+div.flash.notice
 {
 	border-color: #eeaa33;
 	color: #eeaa33;
@@ -260,7 +260,7 @@ div.flash.notice
 }
 
 .application_stack_trace, .full_stack_trace
-{	
+{
 	font-family: monospace;
 	margin-top: 10px;
 	margin-left: 20px;
@@ -328,7 +328,7 @@ thead a, thead a:hover
 
 tfoot
 {
-	background-color: #6688aa; 
+	background-color: #6688aa;
 	color: #333;
 }
 
@@ -370,7 +370,7 @@ ul.tab_list {
 }
 
 ul.tab_list li {
-	padding-left: 1em;	
+	padding-left: 1em;
 }
 .selected {
 	background: url(/newrelic/image?file=arrow-close.png) no-repeat;
@@ -404,9 +404,9 @@ ul.tab_list li {
 }
 
 .scrolling_container {
-	overflow: auto; 
+	overflow: auto;
 	padding-left: 5px;
-	max-height: 150px;		
+	max-height: 150px;
    border: 1px solid #898989;
 }
 

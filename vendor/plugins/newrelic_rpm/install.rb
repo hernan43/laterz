@@ -27,11 +27,11 @@ else
   File.open( dest_config_file, 'w' ) do |out|
     out.puts yaml
   end
-  
+
   puts IO.read(File.join(File.dirname(__FILE__), 'README'))
   puts "\n--------------------------------------------------------\n"
   puts "Installing a default configuration file in #{dest_dir}."
   puts "To monitor your application in production mode, you must enter a license key."
   puts "See #{dest_config_file}"
   puts "For a license key, sign up at http://rpm.newrelic.com/signup."
-end  
+end

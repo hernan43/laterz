@@ -2,7 +2,7 @@
 # Looks for a newrelic.yml file in several locations
 # including ./, ./config, $HOME/.newrelic and $HOME/.
 # It loads the settings from the newrelic.yml section
-# based on the value of RUBY_ENV or RAILS_ENV. 
+# based on the value of RUBY_ENV or RAILS_ENV.
 class NewRelic::Control::Ruby < NewRelic::Control
 
   def env
@@ -26,8 +26,8 @@ class NewRelic::Control::Ruby < NewRelic::Control
   def to_stdout(msg)
     STDOUT.puts msg
   end
-  
+
   def init_config(options={})
   end
-  
+
 end

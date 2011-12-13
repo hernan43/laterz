@@ -28,7 +28,7 @@ test:
   fval: false
   yval: yes
   sval: sure
-    
+
   # checks for loading classes on the background thread
   check_bg_loading: true
 
@@ -38,9 +38,9 @@ test:
     explain_threshold: 0.1
     explain_enabled: true
     stack_trace_threshold: 0.1
-    
+
   error_collector:
     enabled: true
     capture_source: true
-    
-  
+
+

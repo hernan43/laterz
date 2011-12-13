@@ -1,21 +1,21 @@
-<% form_for @user do |form| %>  
+<% form_for @user do |form| %>
 <%= form.error_messages %>
 <ul class="form_list">
-  <li>  
-    <%= form.label :username, "username" %><br/>
-    <%= form.text_field :username %>  
-  </li>  
-  <li>  
-    <%= form.label :email, "email" %><br/>
-    <%= form.text_field :email %>  
-  </li>  
-  <li>  
-    <%= form.label :openid_identifier, "openid url"%><br/>
-    <%= form.text_field :openid_identifier %>  
-  </li>  
   <li>
-	<br/>  
-    <%= form.submit "submit" %>  
-  </li>  
-</ul> 
+    <%= form.label :username, "username" %><br/>
+    <%= form.text_field :username %>
+  </li>
+  <li>
+    <%= form.label :email, "email" %><br/>
+    <%= form.text_field :email %>
+  </li>
+  <li>
+    <%= form.label :openid_identifier, "openid url"%><br/>
+    <%= form.text_field :openid_identifier %>
+  </li>
+  <li>
+	<br/>
+    <%= form.submit "submit" %>
+  </li>
+</ul>
 <% end %>

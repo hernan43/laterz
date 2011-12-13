@@ -29,7 +29,7 @@ module NewRelic::Agent::Samplers
 
         systemtime_stats.record_data_point(systemtime) if systemtime >= 0
         usertime_stats.record_data_point(usertime) if usertime >= 0
-        
+
         # Calculate the true utilization by taking cpu times and dividing by
         # elapsed time X num_processors.
         user_util_stats.record_data_point usertime / (elapsed * num_processors)

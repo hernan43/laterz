@@ -1,7 +1,7 @@
 
 module NewRelic
   COLLAPSE_SEGMENTS_THRESHOLD = 2
-  
+
   MYSQL_EXPLAIN_COLUMNS = [
         "Id",
         "Select Type",
@@ -14,44 +14,44 @@ module NewRelic
         "Rows",
         "Extra"
       ].freeze
-  
+
   class TransactionSample
-    
+
     @@start_time = Time.now
 
     include TransactionAnalysis
     class Segment
-      
+
       class << self
         @@empty_array = []
       end
-      
+
       attr_reader :entry_timestamp
       attr_reader :exit_timestamp
       attr_reader :parent_segment
       attr_reader :metric_name
       attr_reader :segment_id
-      
+
       def initialize(timestamp, metric_name, segment_id)
         @entry_timestamp = timestamp
         @metric_name = metric_name
         @segment_id = segment_id || object_id
       end
-      
+
       def end_trace(timestamp)
         @exit_timestamp = timestamp
       end
-      
+
       def add_called_segment(s)
         @called_segments ||= []
         @called_segments << s
         s.parent_segment = self
       end
-      
+
       def to_s
         to_debug_str(0)
       end
-      
+
       def to_json
         map = {:entry_timestamp => @entry_timestamp,
           :exit_timestamp => @exit_timestamp,
@@ -65,7 +65,7 @@ module NewRelic
         end
         map.to_json
       end
-      
+
       def self.from_json(json)
         json = ActiveSupport::JSON.decode(json) if json.is_a?(String)
         segment = Segment.new(json["entry_timestamp"].to_f, json["metric_name"], json["segment_id"])
@@ -82,15 +82,15 @@ module NewRelic
         end
         segment
       end
-      
+
       def path_string
         "#{metric_name}[#{called_segments.collect {|segment| segment.path_string }.join('')}]"
       end
-      
+
       def to_debug_str(depth)
-        tab = "" 
+        tab = ""
         depth.times {tab << "  "}
-        
+
         s = tab.clone
         s << ">> #{metric_name}: #{(@entry_timestamp*1000).round}\n"
         unless params.empty?
@@ -107,11 +107,11 @@ module NewRelic
         s << "<< #{metric_name}: #{@exit_timestamp ? (@exit_timestamp*1000).round : 'n/a'}\n"
         s
       end
-      
+
       def called_segments
         @called_segments || @@empty_array
       end
-      
+
       def freeze
         params.freeze
         if @called_segments
@@ -121,17 +121,17 @@ module NewRelic
         end
         super
       end
-      
+
       # return the total duration of this segment
       def duration
         @exit_timestamp - @entry_timestamp
       end
-      
-      # return the duration of this segment without 
+
+      # return the duration of this segment without
       # including the time in the called segments
       def exclusive_duration
         d = duration
-        
+
         if @called_segments
           @called_segments.each do |segment|
             d -= segment.duration
@@ -139,33 +139,33 @@ module NewRelic
         end
         d
       end
-      
+
       def []=(key, value)
         # only create a parameters field if a parameter is set; this will save
         # bandwidth etc as most segments have no parameters
         params[key] = value
       end
-        
+
       def [](key)
         params[key]
       end
-      
+
       def params
         @params ||= {}
       end
-      
-      # call the provided block for this segment and each 
+
+      # call the provided block for this segment and each
       # of the called segments
       def each_segment(&block)
         block.call self
-        
+
         if @called_segments
           @called_segments.each do |segment|
             segment.each_segment(&block)
           end
         end
       end
-      
+
       def find_segment(id)
         return self if @segment_id == id
         called_segments.each do |segment|
@@ -174,14 +174,14 @@ module NewRelic
         end
         nil
       end
-      
+
       # perform this in the runtime environment of a managed application, to explain the sql
       # statement(s) executed within a segment of a transaction sample.
-      # returns an array of explanations (which is an array rows consisting of 
+      # returns an array of explanations (which is an array rows consisting of
       # an array of strings for each column returned by the the explain query)
       # Note this happens only for statements whose execution time exceeds a threshold (e.g. 500ms)
       # and only within the slowest transaction in a report period, selected for shipment to RPM
-      def explain_sql        
+      def explain_sql
         sql = params[:sql]
         return nil unless sql && params[:connection_config]
         statements = sql.split(";\n")
@@ -190,7 +190,7 @@ module NewRelic
           if statement.split($;, 2)[0].upcase == 'SELECT'
             explain_resultset = []
             begin
-              connection = NewRelic::TransactionSample.get_connection(params[:connection_config])    
+              connection = NewRelic::TransactionSample.get_connection(params[:connection_config])
               if connection
                 # The resultset type varies for different drivers.  Only thing you can count on is
                 # that it implements each.  Also: can't use select_rows because the native postgres
@@ -229,11 +229,11 @@ module NewRelic
       def obfuscated_sql
         TransactionSample.obfuscate_sql(params[:sql])
       end
-      
+
       def called_segments=(segments)
         @called_segments = segments
       end
-      
+
       protected
         def parent_segment=(s)
           @parent_segment = s
@@ -242,60 +242,60 @@ module NewRelic
           @params = p
         end
     end
-    
+
     class SummarySegment < Segment
-      
-      
+
+
       def initialize(segment)
         super segment.entry_timestamp, segment.metric_name, nil
-        
+
         add_segments segment.called_segments
-        
+
         end_trace segment.exit_timestamp
       end
-      
+
       def add_segments(segments)
         segments.collect do |segment|
           SummarySegment.new(segment)
         end.each {|segment| add_called_segment(segment)}
       end
-      
+
     end
-    
+
     class CompositeSegment < Segment
       attr_reader :detail_segments
-      
+
       def initialize(segments)
         summary = SummarySegment.new(segments.first)
         super summary.entry_timestamp, "Repeating pattern (#{segments.length} repeats)", nil
-        
+
         summary.end_trace(segments.last.exit_timestamp)
-        
+
         @detail_segments = segments.clone
-        
+
         add_called_segment(summary)
         end_trace summary.exit_timestamp
       end
-      
+
       def detail_segments=(segments)
         @detail_segments = segments
       end
-      
+
     end
-    
+
     class << self
       def obfuscate_sql(sql)
-        NewRelic::Agent.instance.obfuscator.call(sql) 
+        NewRelic::Agent.instance.obfuscator.call(sql)
       end
-      
-      
+
+
       def get_connection(config)
         @@connections ||= {}
-        
+
         connection = @@connections[config]
-        
+
         return connection if connection
-        
+
         begin
           connection = ActiveRecord::Base.send("#{config[:adapter]}_connection", config)
           @@connections[config] = connection
@@ -305,7 +305,7 @@ module NewRelic
           nil
         end
       end
-      
+
       def close_connections
         @@connections ||= {}
         @@connections.values.each do |connection|
@@ -314,17 +314,17 @@ module NewRelic
           rescue
           end
         end
-        
+
         @@connections = {}
       end
-      
+
     end
-        
+
 
     attr_reader :root_segment
     attr_reader :params
     attr_reader :sample_id
-    
+
     def initialize(time = Time.now.to_f, sample_id = nil)
       @sample_id = sample_id || object_id
       @start_time = time
@@ -337,17 +337,17 @@ module NewRelic
     def timestamp
       @start_time - @@start_time.to_f
     end
-    
+
     def to_json(options = {})
       map = {:sample_id => @sample_id,
         :start_time => @start_time,
         :root_segment => @root_segment}
       if @params && !@params.empty?
-        map[:params] = @params  
+        map[:params] = @params
       end
       map.to_json
     end
-    
+
     def self.from_json(json)
       json = ActiveSupport::JSON.decode(json) if json.is_a?(String)
       sample = TransactionSample.new(json["start_time"].to_f, json["sample_id"].to_i)
@@ -365,39 +365,39 @@ module NewRelic
     def start_time
       Time.at(@start_time)
     end
-    
+
     def path_string
       @root_segment.path_string
     end
-    
+
     def create_segment (relative_timestamp, metric_name, segment_id = nil)
       raise TypeError.new("Frozen Transaction Sample") if frozen?
-      NewRelic::TransactionSample::Segment.new(relative_timestamp, metric_name, segment_id)    
+      NewRelic::TransactionSample::Segment.new(relative_timestamp, metric_name, segment_id)
     end
-    
+
     def freeze
       @root_segment.freeze
       params.freeze
       super
     end
-    
+
     def duration
       root_segment.duration
     end
-    
+
     def each_segment(&block)
       @root_segment.each_segment(&block)
     end
-    
+
     def find_segment(id)
       @root_segment.find_segment(id)
     end
-    
+
     def to_s
       s = "Transaction Sample collected at #{start_time}\n"
       s << "  {\n"
       s << "  Path: #{params[:path]} \n"
-      
+
       params.each do |k,v|
         next if k == :path
         s << "  #{k}: " <<
@@ -410,7 +410,7 @@ module NewRelic
       s << "  }\n\n"
       s <<  @root_segment.to_debug_str(0)
     end
-    
+
     # return a new transaction sample that treats segments
     # with the given regular expression in their name as if they
     # were never called at all.  This allows us to strip out segments
@@ -418,37 +418,37 @@ module NewRelic
     # normally show up in production (like Rails/Application Code Loading)
     def omit_segments_with(regex)
       regex = Regexp.new(regex)
-      
+
       sample = TransactionSample.new(@start_time, sample_id)
-      
+
       params.each {|k,v| sample.params[k] = v}
-        
+
       delta = build_segment_with_omissions(sample, 0.0, @root_segment, sample.root_segment, regex)
-      sample.root_segment.end_trace(@root_segment.exit_timestamp - delta) 
+      sample.root_segment.end_trace(@root_segment.exit_timestamp - delta)
       sample.freeze
     end
-    
+
     # return a new transaction sample that can be sent to the RPM service.
-    # this involves potentially one or more of the following options 
+    # this involves potentially one or more of the following options
     #   :explain_sql : run EXPLAIN on all queries whose response times equal the value for this key
     #       (for example :explain_sql => 2.0 would explain everything over 2 seconds.  0.0 would explain everything.)
     #   :keep_backtraces : keep backtraces, significantly increasing size of trace (off by default)
     #   :obfuscate_sql : clear sql fields of potentially sensitive values (higher overhead, better security)
     def prepare_to_send(options={})
       sample = TransactionSample.new(@start_time, sample_id)
-      
+
       sample.params.merge! self.params
-      
+
       begin
         build_segment_for_transfer(sample, @root_segment, sample.root_segment, options)
       ensure
         self.class.close_connections
       end
-      
-      sample.root_segment.end_trace(@root_segment.exit_timestamp) 
+
+      sample.root_segment.end_trace(@root_segment.exit_timestamp)
       sample.freeze
     end
-    
+
     def analyze
       sample = self
       original_path_string = nil
@@ -460,9 +460,9 @@ module NewRelic
         sample = new_sample
         return sample if sample.path_string.to_s == original_path_string
       end
-      
+
     end
-    
+
   protected
     def root_segment=(segment)
       @root_segment = segment
@@ -472,19 +472,19 @@ module NewRelic
     end
 
   private
-  
+
     def analyze_called_segments(called_segments)
       path = nil
       like_segments = []
-      
-      segments = [] 
-      
+
+      segments = []
+
       called_segments.each do |segment|
         segment = segment.dup
         segment.called_segments = analyze_called_segments(segment.called_segments)
-        
+
         current_path = segment.path_string
-        if path == current_path 
+        if path == current_path
           like_segments << segment
         else
           segments += summarize_segments(like_segments)
@@ -495,10 +495,10 @@ module NewRelic
         end
       end
       segments += summarize_segments(like_segments)
-      
+
       segments
     end
-    
+
     def summarize_segments(like_segments)
       if like_segments.length > COLLAPSE_SEGMENTS_THRESHOLD
         puts "#{like_segments.first.path_string} #{like_segments.length}"
@@ -507,33 +507,33 @@ module NewRelic
         like_segments
       end
     end
-    
+
     def build_segment_with_omissions(new_sample, time_delta, source_segment, target_segment, regex)
       source_segment.called_segments.each do |source_called_segment|
         # if this segment's metric name matches the given regular expression, bail
         # here and increase the amount of time that we reduce the target sample with
         # by this omitted segment's duration.
         do_omit = regex =~ source_called_segment.metric_name
-        
+
         if do_omit
           time_delta += source_called_segment.duration
         else
           target_called_segment = new_sample.create_segment(
-                source_called_segment.entry_timestamp - time_delta, 
+                source_called_segment.entry_timestamp - time_delta,
                 source_called_segment.metric_name,
                 source_called_segment.segment_id)
-          
+
           target_segment.add_called_segment target_called_segment
           source_called_segment.params.each do |k,v|
             target_called_segment[k]=v
           end
-          
+
           time_delta = build_segment_with_omissions(
                 new_sample, time_delta, source_called_segment, target_called_segment, regex)
           target_called_segment.end_trace(source_called_segment.exit_timestamp - time_delta)
         end
       end
-      
+
       return time_delta
     end
 
@@ -557,13 +557,13 @@ module NewRelic
             if options[:explain_enabled] && options[:explain_sql] && source_called_segment.duration > options[:explain_sql].to_f
               target_called_segment[:explanation] = source_called_segment.explain_sql
             end
-            
+
             target_called_segment[:sql]=sql if options[:record_sql] == :raw
             target_called_segment[:sql_obfuscated] = TransactionSample.obfuscate_sql(sql) if options[:record_sql] == :obfuscated
           when :connection_config
             # don't copy it
           else
-            target_called_segment[k]=v 
+            target_called_segment[k]=v
           end
         end
 

@@ -1,16 +1,16 @@
 #
 # This file is part of Laterz.
-# 
+#
 # Laterz is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Laterz is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with Laterz.  If not, see <http://www.gnu.org/licenses/>.
 #
@@ -22,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_sessions
   map.resources :static
   map.resources :links
-  
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
@@ -41,7 +41,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
+
   # Sample resource route with more complex sub-resources
   #   map.resources :products do |products|
   #     products.resources :comments
@@ -54,7 +54,7 @@ ActionController::Routing::Routes.draw do |map|
   #     admin.resources :products
   #   end
 
-  map.login 'login', :controller => 'user_sessions', :action => 'new'  
+  map.login 'login', :controller => 'user_sessions', :action => 'new'
   map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
   map.register 'register', :controller => 'users', :action => 'new'
 
